@@ -184,7 +184,7 @@ collection:
     meta:
       id: fld_1d0aadf11d1440009de9b990df174c3d
       created: 1753185290544
-      modified: 1753187026742
+      modified: 1753245886097
       sortKey: -1753185290544
       description: Operations related to account management (retrieval and balance updates)
     children:
@@ -481,13 +481,13 @@ cookieJar:
   meta:
     id: jar_0ca2af2adac730f1cf4057d122dcd1c92c8d1d97
     created: 1753182079219
-    modified: 1753187026730
+    modified: 1753245886088
 environments:
   name: Base Environment
   meta:
     id: env_0ca2af2adac730f1cf4057d122dcd1c92c8d1d97
     created: 1753182079211
-    modified: 1753187026735
+    modified: 1753245886095
     isPrivate: false
   data:
     base_url: "{{ _.scheme }}://{{ _.host }}{{ _.base_path }}"
@@ -496,7 +496,7 @@ environments:
       meta:
         id: env_579c0d7ace8a4762afe65b8b65e9ca0f
         created: 1753185249889
-        modified: 1753187026732
+        modified: 1753245886091
         isPrivate: false
         sortKey: 1753185249889
       data:
@@ -968,3 +968,73 @@ spec:
     id: spc_b83fda6ca34f44b0ad703fd1e5b79b5a
     created: 1753182223320
     modified: 1753184786425
+testSuites:
+  - name: Accounts api test suite
+    meta:
+      id: uts_d2b24f3fd4be4857b63585421a4ac643
+      created: 1753245972144
+      modified: 1753246040619
+      sortKey: -1753245972144
+    tests:
+      - name: Returns 200
+        meta:
+          id: ut_00b01891e5024704a14513144c72b0da
+          created: 1753245995078
+          modified: 1753246234165
+          sortKey: -1753245995078
+        requestId: req_d319736e2d07449c83b745ef8f64da2e
+        code: |-
+          const response = await insomnia.send();
+          expect(response.status).to.equal(201);
+          const account = JSON.parse(response.data);
+          expect(account).to.have.property('account_id').that.is.a('string');
+          expect(account).to.have.property('type').that.is.a('string');
+          expect(account).to.have.property('balance').that.is.a('number');
+      - name: Returns 200
+        meta:
+          id: ut_ea99a8aba6254bab897e3a2a6a5f713b
+          created: 1753246284140
+          modified: 1753246924201
+          sortKey: -1753246284140
+        requestId: req_84a3b0b5d1234b9693ca3bee9280101a
+        code: |-
+          const response = await insomnia.send();
+          expect(response.status).to.equal(200);
+          const body = response.data;expect(body).to.be.a('string');
+          expect(body.toLowerCase()).to.include('accounts api');
+      - name: Returns 200
+        meta:
+          id: ut_44996255b4d745d5a4d9d98377d7eda4
+          created: 1753246710846
+          modified: 1753246740682
+          sortKey: -1753246710846
+        requestId: req_da94c4cc7767409d82f36a28fcdf1f54
+        code: |-
+          const response = await insomnia.send();
+          expect(response.status).to.equal(200);
+          const account = JSON.parse(response.data);
+          expect(account).to.have.property('balance').that.is.a('number');
+      - name: Returns 200
+        meta:
+          id: ut_dc5db1d3882a461591d28987cc9d2e6e
+          created: 1753247139793
+          modified: 1753247196524
+          sortKey: -1753247139793
+        requestId: req_c46f410290264b35bc295de6dde00246
+        code: |-
+          const response = await insomnia.send();
+          expect(response.status).to.equal(200);
+          const accounts = JSON.parse(response.data);
+          expect(accounts).to.be.an('array');
+          if (accounts.length > 0) {const account = accounts[0];
+          											expect(account).to.have.property('account_id');}
+      - name: Returns 200
+        meta:
+          id: ut_ae25bbaaa46943de98772cafbef4ffd0
+          created: 1753247386587
+          modified: 1753247395791
+          sortKey: -1753247386587
+        requestId: req_b516b86da8df4739b543eae3f6b61ab5
+        code: const response = await
+          insomnia.send();expect(response.status).to.equal(200);const account =
+          JSON.parse(response.data);expect(account).to.have.property('balance').that.is.a('number');
